@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">Welcome Oishee!</nav>
+    <div class="main-container">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Credit/Debit</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table data will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <form id="dataForm">
+                <div class="input-group">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="amount" placeholder="Amount" required>
+                </div>
+                <div class="input-group">
+                    <select name="credit_debit">
+                        <option value="Credit">Credit</option>
+                        <option value="Debit">Debit</option>
+                    </select>
+                    <input type="text" name="category" placeholder="Category" required>
+                </div>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+        <!-- New Chart Container -->
+        <div class="chart-container">
+            <canvas id="expenseChart"></canvas>
+        </div>
+    </div>
+
+    <!-- CSRF Token Fetch Script -->
+    <script>
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart Initialization Script -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categoryData = {}; // Stores amount by category
+
+        // Initialize Chart.js Donut Chart
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Expenses by Category',
+                    data: [],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD', '#E74C3C'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: { position: 'bottom' }
+            }
+        });
+
+        // Handle Form Submission
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const amount = parseFloat(formData.get('amount'));
+            const category = formData.get('category');
+
+            // Update categoryData
+            if (categoryData[category]) {
+                categoryData[category] += amount;
+            } else {
+                categoryData[category] = amount;
+            }
+
+            // Update the chart
+            updateChart();
+            e.target.reset(); // Clear form
+        });
+
+        function updateChart() {
+            expenseChart.data.labels = Object.keys(categoryData);
+            expenseChart.data.datasets[0].data = Object.values(categoryData);
+            expenseChart.update();
+        }
+    });
+    </script>
+</body>
+</html>

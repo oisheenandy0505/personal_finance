@@ -1,0 +1,136 @@
+/* finance/static/finance/styles.css */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9; /* Lighter grey background for a fresher look */
+}
+
+.navbar {
+    background-color: #6a5acd; /* Soft purple */
+    color: #fff;
+    padding: 20px;
+    width: calc(100% - 2cm); /* Reduce width by 2cm to account for the left and right margin */
+    margin: 0.5cm auto; /* 0.5cm margin from the top and auto to center */
+    box-shadow: 0 2px 10px rgba(102, 51, 153, 0.2); /* Soft purple shadow */
+    text-align: center;
+    position: fixed;
+    top: 0.01cm; /* Small distance from the top */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-radius: 15px; /* Rounded corners for all sides */
+}
+
+.main-container {
+    padding-top: 60px;
+    margin: 2cm auto;
+    padding-left: 1.5cm;
+    display: block;
+}
+
+.table-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Minimum width */
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 2px solid #eee; /* Thicker and lighter borders for a subtle differentiation */
+}
+
+.form-container {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 50%; /* Align with table width */
+    max-width: 600px; /* Limiting max width for form */
+    margin-left: -1.5cm; /* Moves the form slightly to the left */
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px; /* Increased spacing for clarity */
+}
+
+.input-group input, .input-group select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px; /* Adjust spacing */
+}
+
+button {
+    background-color: #6a5acd; /* Soft purple */
+    color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Wrapping form and chart in a flex container */
+.form-and-chart-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1cm;
+    margin-top: 20px;
+}
+
+/* Form container, takes up about 45% of the space */
+.form-container {
+    width: 50%; /* Takes up 50% of the width */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Chart container, positioned to start at the middle of the screen */
+.chart-container {
+    flex-grow: 1; /* Allows chart container to fill the remaining space */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    height: 300px; /* You can adjust this height as needed */
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+    input, select, button {
+        width: 100%;
+        margin-right: 0; /* Remove margin in mobile view */
+        margin-bottom: 10px;
+    }
+}
